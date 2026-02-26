@@ -170,6 +170,7 @@ std::string City2::print() const {
 
 # Задание 5
 <img width="568" height="530" alt="image" src="https://github.com/user-attachments/assets/e9c3ee94-4df2-4d33-a0a1-b8aae5e1e8f5" />
+<img width="356" height="361" alt="image" src="https://github.com/user-attachments/assets/b136a51e-9164-4949-8df2-f75b6bd341d0" />
 
 
 
