@@ -126,9 +126,50 @@ std::string City::print() const {
 }
 ```
 # Тестирование
+<img width="173" height="141" alt="image" src="https://github.com/user-attachments/assets/2ba3e10e-a43b-41fa-b879-33838c453923" />
 
+# Задание 4
+Создать класс City2 с двумя конструкторами и возможностью интерактивного ввода.
 
+1. Конструктор 1: только название города.
+2. Конструктор 2: название + готовый набор путей.
+3. Реализовать интерактивный ввод для создания произвольной схемы городов.
+4. Использовать unique_ptr для автоматического управления памятью.
 
+Реализация
+
+```cpp
+City2::City2(const std::string& name) : name_(name) {}
+
+City2::City2(const std::string& name,
+             const std::vector<std::pair<City2*, int>>& paths)
+    : name_(name), paths_(paths) {}
+
+void City2::AddPath(City2* destination, int cost) {
+  paths_.emplace_back(destination, cost);
+}
+
+std::string City2::print() const {
+  std::ostringstream oss;
+  oss << name_;
+
+  if (!paths_.empty()) {
+    oss << " -> ";
+    for (size_t i = 0; i < paths_.size(); ++i) {
+      oss << paths_[i].first->name_ << ":" << paths_[i].second;
+      if (i != paths_.size() - 1) {
+        oss << ", ";
+      }
+    }
+  }
+  return oss.str();
+}
+```
+
+# Тестирование
+
+# Задание 5
+<img width="568" height="530" alt="image" src="https://github.com/user-attachments/assets/e9c3ee94-4df2-4d33-a0a1-b8aae5e1e8f5" />
 
 
 
