@@ -167,9 +167,117 @@ std::string City2::print() const {
 ```
 
 # Тестирование
+<img width="568" height="530" alt="image" src="https://github.com/user-attachments/assets/e9c3ee94-4df2-4d33-a0a1-b8aae5e1e8f5" />
 
 # Задание 5
-<img width="568" height="530" alt="image" src="https://github.com/user-attachments/assets/e9c3ee94-4df2-4d33-a0a1-b8aae5e1e8f5" />
+Создать класс Fraction для работы с обыкновенными дробями.
+
+1. Определить класс с полями numerator_ (числитель) и denominator_ (знаменатель).
+2. Реализовать конструктор с проверкой деления на ноль и автоматическим сокращением.
+3. Реализовать арифметические операции с другой дробью и с целым числом.
+4. Реализовать метод print() для вывода в формате "числитель/знаменатель".
+
+Реализация
+
+```cpp
+// Конструктор
+Fraction::Fraction(int numerator, int denominator) : numerator_(numerator), denominator_(denominator) {
+  if (denominator_ == 0) {
+    throw std::invalid_argument("Знаменатель не может быть равен нулю");
+  }
+  simplify();
+}
+
+// Наибольший общий делитель
+int Fraction::gcd(int a, int b) const {
+  while (b != 0) {
+    int temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+
+// Сокращение дроби
+void Fraction::simplify() {
+  int divisor = gcd(std::abs(numerator_), std::abs(denominator_));
+  numerator_ /= divisor;
+  denominator_ /= divisor;
+
+  // Знак оставляем в числителе
+  if (denominator_ < 0) {
+    numerator_ = -numerator_;
+    denominator_ = -denominator_;
+  }
+}
+
+// Приватный метод для выполнения всех арифметических операций
+Fraction Fraction::operate(const Fraction& other, char op) const {
+  int num = 0;
+  int den = 1;
+
+  switch (op) {
+    case '+':
+      num = numerator_ * other.denominator_ + other.numerator_ * denominator_;
+      den = denominator_ * other.denominator_;
+      break;
+    case '-':
+      num = numerator_ * other.denominator_ - other.numerator_ * denominator_;
+      den = denominator_ * other.denominator_;
+      break;
+    case '*':
+      num = numerator_ * other.numerator_;
+      den = denominator_ * other.denominator_;
+      break;
+    case '/':
+      num = numerator_ * other.denominator_;
+      den = denominator_ * other.numerator_;
+      break;
+  }
+  return Fraction(num, den);
+}
+
+// Арифметические операции с другой дробью
+Fraction Fraction::sum(const Fraction& other) const {
+  return operate(other, '+');
+}
+
+Fraction Fraction::minus(const Fraction& other) const {
+  return operate(other, '-');
+}
+
+Fraction Fraction::multiply(const Fraction& other) const {
+  return operate(other, '*');
+}
+
+Fraction Fraction::div(const Fraction& other) const {
+  return operate(other, '/');
+}
+
+// Арифметические операции с целым числом
+Fraction Fraction::sum(int value) const {
+  return sum(Fraction(value, 1));
+}
+
+Fraction Fraction::minus(int value) const {
+  return minus(Fraction(value, 1));
+}
+
+Fraction Fraction::multiply(int value) const {
+  return multiply(Fraction(value, 1));
+}
+
+Fraction Fraction::div(int value) const {
+  return div(Fraction(value, 1));
+}
+
+// print()
+std::string Fraction::print() const {
+  return std::to_string(numerator_) + "/" + std::to_string(denominator_);
+}
+```
+# Тестирование
+
 <img width="356" height="361" alt="image" src="https://github.com/user-attachments/assets/b136a51e-9164-4949-8df2-f75b6bd341d0" />
 
 
